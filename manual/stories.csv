@@ -1,0 +1,8 @@
+﻿Summary,Issue Type,Labels
+"[US-AUTH-01] En tant que client, je veux me connecter pour accéder à mon espace",Story,WEBTOURS RSVA
+"[US-AUTH-02] En tant que visiteur, je veux créer un compte pour pouvoir réserver",Story,WEBTOURS RSVA
+"[US-AUTH-03] En tant que client, je veux me déconnecter pour protéger ma session",Story,WEBTOURS RSVA
+"[US-FLT-01] En tant que client, je veux rechercher des vols pour comparer les offres",Story,WEBTOURS RSVF
+"[US-FLT-02] En tant que client, je veux réserver et payer un vol",Story,WEBTOURS RSVF
+"[US-ITI-01] En tant que client, je veux consulter mon itinéraire",Story,WEBTOURS RSVI
+"[US-ITI-02] En tant que client, je veux annuler un ou plusieurs vols",Story,WEBTOURS RSVI

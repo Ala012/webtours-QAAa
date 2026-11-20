@@ -1,0 +1,68 @@
+﻿TestKey,Summary,Description,Test Type,Test Repository Path,Labels,Action,Data,Expected Result
+T1,[RSVA-2401] Login valide jojo/bean,"Préconditions : Appli démarrée, user jojo/bean existant",Manual,/WebTours/RSVA - Authentification/FT - Functional Testing,MANUAL AUTH MODULE-RSVA FT RSVA TYPE-FT WEBTOURS,Ouvrir /WebTours/,,
+T1,,,,,,"Saisir username=jojo, password=bean",,
+T1,,,,,,Cliquer Login,,"Page 'Welcome, jojo' affichée, menu Flights/Itinerary/Sign Off visible"
+T2,[RSVA-2402] Création d'un nouveau compte (Sign up),Préconditions : Username inexistant,Manual,/WebTours/RSVA - Authentification/FT - Functional Testing,MANUAL AUTH MODULE-RSVA FT RSVA TYPE-FT WEBTOURS,Cliquer 'sign up now',,
+T2,,,,,,"Remplir username, password, confirm, nom, prénom, adresse",,
+T2,,,,,,Cliquer Continue,,"Message 'Thank you, <user>, for registering' affiché"
+T3,[RSVA-2403] Sign Off après login,Préconditions : Utilisateur connecté,Manual,/WebTours/RSVA - Authentification/FT - Functional Testing,MANUAL AUTH MODULE-RSVA FT RSVA TYPE-FT WEBTOURS,Cliquer Sign Off,,"Retour à la page de login, session fermée"
+T4,[RSVA-2404] Login avec mauvais mot de passe,Préconditions : User jojo existant,Manual,/WebTours/RSVA - Authentification/ET - Error Testing,MANUAL AUTH MODULE-RSVA ET RSVA TYPE-ET WEBTOURS,Saisir jojo / mauvais_mdp,,
+T4,,,,,,Cliquer Login,,"Erreur 'password was incorrect', pas d'accès"
+T5,[RSVA-2405] Login avec utilisateur inexistant,Préconditions : -,Manual,/WebTours/RSVA - Authentification/ET - Error Testing,MANUAL AUTH MODULE-RSVA ET RSVA TYPE-ET WEBTOURS,Saisir user_inconnu_xyz / test,,
+T5,,,,,,Cliquer Login,,"Erreur 'unable to find the user name', pas d'accès"
+T6,[RSVA-2406] Sign up avec confirmation de mot de passe différente,Préconditions : -,Manual,/WebTours/RSVA - Authentification/ET - Error Testing,MANUAL AUTH MODULE-RSVA ET RSVA TYPE-ET WEBTOURS,"Remplir password=abc, confirm=xyz",,
+T6,,,,,,Cliquer Continue,,Erreur 'Passwords do not match' (BUG potentiel si compte créé)
+T7,[RSVA-2407] Login avec champs vides,Préconditions : -,Manual,/WebTours/RSVA - Authentification/BT - Boundary Testing,MANUAL AUTH MODULE-RSVA BT RSVA TYPE-BT WEBTOURS,Laisser username et password vides,,
+T7,,,,,,Cliquer Login,,"Erreur demandant les identifiants, pas d'accès"
+T8,[RSVA-2408] Username très long (256 caractères),Préconditions : -,Manual,/WebTours/RSVA - Authentification/BT - Boundary Testing,MANUAL AUTH MODULE-RSVA BT RSVA TYPE-BT WEBTOURS,Saisir 256 'a' en username,,
+T8,,,,,,Cliquer Login,,Rejet propre sans crash serveur ni stack trace
+T9,[RSVA-2409] Username avec injection ' OR 1=1 --,Préconditions : -,Manual,/WebTours/RSVA - Authentification/BT - Boundary Testing,MANUAL AUTH MODULE-RSVA BT RSVA TYPE-BT WEBTOURS,Saisir ' OR 1=1 -- en username,,
+T9,,,,,,Cliquer Login,,"Login refusé, aucune erreur technique affichée"
+T10,[RSVA-2410] Accès à welcome.pl sans session,Préconditions : Aucune session,Manual,/WebTours/RSVA - Authentification/PT - Permission Testing,MANUAL AUTH MODULE-RSVA PT RSVA TYPE-PT WEBTOURS,Appeler /cgi-bin/welcome.pl?page=menu sans userSession valide,,"Redirection/erreur, contenu protégé non affiché"
+T11,[RSVA-2411] Réutilisation d'une session après Sign Off,"Préconditions : Utilisateur déconnecté, ancien userSession conservé",Manual,/WebTours/RSVA - Authentification/PT - Permission Testing,MANUAL AUTH MODULE-RSVA PT RSVA TYPE-PT WEBTOURS,"Se connecter, noter userSession",,
+T11,,,,,,Sign Off,,
+T11,,,,,,Rejouer une requête avec l'ancien userSession,,Session refusée
+T12,[RSVA-2412] Accès au profil d'un autre utilisateur,Préconditions : Connecté en jojo,Manual,/WebTours/RSVA - Authentification/PT - Permission Testing,MANUAL AUTH MODULE-RSVA PT RSVA TYPE-PT WEBTOURS,Modifier le paramètre username dans la requête de profil,,Accès refusé aux données d'un autre utilisateur
+T13,[RSVF-2401] Recherche d'un vol aller simple valide,Préconditions : Connecté en jojo,Manual,/WebTours/RSVF - Flight/FT - Functional Testing,MANUAL FLIGHT MODULE-RSVF FT RSVF TYPE-FT WEBTOURS,Menu Flights,,
+T13,,,,,,"Depart=Denver, Arrive=London",,
+T13,,,,,,"Dates valides, 1 passager",,
+T13,,,,,,Cliquer Continue,,Liste de vols (outboundFlight) affichée
+T14,[RSVF-2402] Réservation complète d'un vol,"Préconditions : Connecté, recherche faite",Manual,/WebTours/RSVF - Flight/FT - Functional Testing,MANUAL FLIGHT MODULE-RSVF FT RSVF TYPE-FT WEBTOURS,Choisir un vol,,
+T14,,,,,,Continue,,
+T14,,,,,,"Saisir infos passager + carte 4111111111111111, exp 12/30",,
+T14,,,,,,Secure Purchase,,Page 'Thank you for booking through Web Tours' avec récapitulatif
+T15,[RSVF-2403] Recherche aller-retour avec préférence siège,Préconditions : Connecté,Manual,/WebTours/RSVF - Flight/FT - Functional Testing,MANUAL FLIGHT MODULE-RSVF FT RSVF TYPE-FT WEBTOURS,Cocher Round trip,,
+T15,,,,,,"Seat pref=Window, type=First",,
+T15,,,,,,Continue,,Vols aller et retour proposés
+T16,[RSVF-2404] Depart = Arrive (même ville),Préconditions : Connecté,Manual,/WebTours/RSVF - Flight/ET - Error Testing,MANUAL FLIGHT MODULE-RSVF ET RSVF TYPE-ET WEBTOURS,"Depart=Paris, Arrive=Paris",,
+T16,,,,,,Continue,,Erreur (villes identiques) - BUG si accepté
+T17,[RSVF-2405] Date de retour antérieure à la date de départ,Préconditions : Connecté,Manual,/WebTours/RSVF - Flight/ET - Error Testing,MANUAL FLIGHT MODULE-RSVF ET RSVF TYPE-ET WEBTOURS,"Depart 12/20/2026, Return 12/10/2026",,
+T17,,,,,,Continue,,"Erreur de date, pas de vols proposés"
+T18,[RSVF-2406] Paiement avec numéro de carte invalide,Préconditions : Vol sélectionné,Manual,/WebTours/RSVF - Flight/ET - Error Testing,MANUAL FLIGHT MODULE-RSVF ET RSVF TYPE-ET WEBTOURS,creditCard=abcd,,
+T18,,,,,,Secure Purchase,,"Erreur de validation, réservation non créée"
+T19,[RSVF-2407] Nombre de passagers = 0,Préconditions : Connecté,Manual,/WebTours/RSVF - Flight/BT - Boundary Testing,MANUAL FLIGHT MODULE-RSVF BT RSVF TYPE-BT WEBTOURS,numPassengers=0,,
+T19,,,,,,Continue,,Rejet de la valeur
+T20,[RSVF-2408] Nombre de passagers très grand (9999),Préconditions : Connecté,Manual,/WebTours/RSVF - Flight/BT - Boundary Testing,MANUAL FLIGHT MODULE-RSVF BT RSVF TYPE-BT WEBTOURS,numPassengers=9999,,
+T20,,,,,,Continue,,"Rejet ou limite appliquée, pas de crash"
+T21,[RSVF-2409] Nombre de passagers négatif (-1),Préconditions : Connecté,Manual,/WebTours/RSVF - Flight/BT - Boundary Testing,MANUAL FLIGHT MODULE-RSVF BT RSVF TYPE-BT WEBTOURS,numPassengers=-1,,
+T21,,,,,,Continue,,Rejet de la valeur
+T22,[RSVF-2410] Accès à reservations.pl sans login,Préconditions : Aucune session,Manual,/WebTours/RSVF - Flight/PT - Permission Testing,MANUAL FLIGHT MODULE-RSVF PT RSVF TYPE-PT WEBTOURS,GET /cgi-bin/reservations.pl sans session,,Accès refusé / redirection login
+T23,[RSVF-2411] Manipulation du prix dans le POST,"Préconditions : Connecté, vol sélectionné",Manual,/WebTours/RSVF - Flight/PT - Permission Testing,MANUAL FLIGHT MODULE-RSVF PT RSVF TYPE-PT WEBTOURS,"Intercepter le POST, modifier le prix",,
+T23,,,,,,Envoyer,,"Prix recalculé côté serveur, valeur falsifiée ignorée"
+T24,[RSVF-2412] Falsification du flightID,Préconditions : Connecté,Manual,/WebTours/RSVF - Flight/PT - Permission Testing,MANUAL FLIGHT MODULE-RSVF PT RSVF TYPE-PT WEBTOURS,Modifier outboundFlight par un ID inexistant,,
+T24,,,,,,Envoyer,,"Erreur gérée, aucune réservation créée"
+T25,[RSVI-2401] Affichage de l'itinéraire après réservation,Préconditions : Au moins 1 vol réservé,Manual,/WebTours/RSVI - Itinerary/FT - Functional Testing,MANUAL ITINERARY MODULE-RSVI FT RSVI TYPE-FT WEBTOURS,Menu Itinerary,,Vol réservé listé avec détails
+T26,[RSVI-2402] Annulation d'un vol sélectionné,Préconditions : 1 vol dans l'itinéraire,Manual,/WebTours/RSVI - Itinerary/FT - Functional Testing,MANUAL ITINERARY MODULE-RSVI FT RSVI TYPE-FT WEBTOURS,Cocher le vol,,
+T26,,,,,,Cliquer 'Cancel Selected',,Vol supprimé de l'itinéraire
+T27,[RSVI-2403] Annulation de tous les vols,Préconditions : 2 vols réservés ou plus,Manual,/WebTours/RSVI - Itinerary/FT - Functional Testing,MANUAL ITINERARY MODULE-RSVI FT RSVI TYPE-FT WEBTOURS,Cliquer 'Cancel All',,"Itinéraire vide, message 'No flights have been reserved'"
+T28,[RSVI-2404] Annuler sans sélectionner de vol,Préconditions : Itinéraire non vide,Manual,/WebTours/RSVI - Itinerary/ET - Error Testing,MANUAL ITINERARY MODULE-RSVI ET RSVI TYPE-ET WEBTOURS,Ne rien cocher,,
+T28,,,,,,Cliquer 'Cancel Selected',,"Message d'erreur ou aucune modification, pas de crash"
+T29,[RSVI-2405] Itinéraire d'un nouvel utilisateur sans réservation,Préconditions : Nouveau compte,Manual,/WebTours/RSVI - Itinerary/ET - Error Testing,MANUAL ITINERARY MODULE-RSVI ET RSVI TYPE-ET WEBTOURS,Menu Itinerary,,Message 'No flights have been reserved'
+T30,[RSVI-2406] Double annulation du même vol (rejeu de requête),Préconditions : Vol déjà annulé,Manual,/WebTours/RSVI - Itinerary/ET - Error Testing,MANUAL ITINERARY MODULE-RSVI ET RSVI TYPE-ET WEBTOURS,Rejouer la requête d'annulation,,"Erreur gérée, pas d'incohérence"
+T31,[RSVI-2407] Itinéraire avec 1 seul vol,Préconditions : 1 vol réservé,Manual,/WebTours/RSVI - Itinerary/BT - Boundary Testing,MANUAL ITINERARY MODULE-RSVI BT RSVI TYPE-BT WEBTOURS,Menu Itinerary,,"1 ligne affichée, bouton Cancel fonctionnel"
+T32,[RSVI-2408] Itinéraire avec 10 vols,Préconditions : 10 vols réservés,Manual,/WebTours/RSVI - Itinerary/BT - Boundary Testing,MANUAL ITINERARY MODULE-RSVI BT RSVI TYPE-BT WEBTOURS,Menu Itinerary,,"Les 10 vols affichés, pas de troncature"
+T33,[RSVI-2409] flightID de longueur excessive dans removeFlights,Préconditions : Connecté,Manual,/WebTours/RSVI - Itinerary/BT - Boundary Testing,MANUAL ITINERARY MODULE-RSVI BT RSVI TYPE-BT WEBTOURS,Envoyer un flightID de 500 caractères,,"Rejet propre, pas d'erreur serveur"
+T34,[RSVI-2410] Accès à itinerary.pl sans login,Préconditions : Aucune session,Manual,/WebTours/RSVI - Itinerary/PT - Permission Testing,MANUAL ITINERARY MODULE-RSVI PT RSVI TYPE-PT WEBTOURS,GET /cgi-bin/itinerary.pl sans session,,Accès refusé / redirection login
+T35,[RSVI-2411] Annulation du vol d'un autre utilisateur,Préconditions : 2 comptes avec vols,Manual,/WebTours/RSVI - Itinerary/PT - Permission Testing,MANUAL ITINERARY MODULE-RSVI PT RSVI TYPE-PT WEBTOURS,"Connecté en A, envoyer le flightID de B",,Annulation refusée (BUG IDOR si acceptée)
+T36,[RSVI-2412] Itinéraire après Sign Off (bouton Retour),Préconditions : Connecté puis déconnecté,Manual,/WebTours/RSVI - Itinerary/PT - Permission Testing,MANUAL ITINERARY MODULE-RSVI PT RSVI TYPE-PT WEBTOURS,Sign Off,,
+T36,,,,,,Bouton Retour du navigateur,,Données d'itinéraire non réaffichées

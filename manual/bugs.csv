@@ -1,0 +1,12 @@
+Summary,Issue Type,Priority,Labels,Description
+[BUG-01] reservations.pl accessible sans login,Bug,Highest,WEBTOURS RSVF PT,"POST /cgi-bin/reservations.pl sans session renvoie la liste des vols. Test RSVF-2410."
+[BUG-02] Crash Perl sur date invalide (Month out of range),Bug,High,WEBTOURS RSVF ET CRASH,"departDate=13/45/2026 ou abc ou vide -> page vide (717 octets). error.log: Month '12' out of range 0..11 at reservations.pl line 727. Test RSVF-2405."
+[BUG-03] flightID inexistant accepté et itinéraire corrompu,Bug,High,WEBTOURS RSVF PT,"outboundFlight=INEXISTANT -> Reservation Made! + ligne corrompue (total 0$). Test RSVF-2412."
+[BUG-04] Achat accepté avec carte invalide ou champs vides,Bug,High,WEBTOURS RSVF ET,"creditCard=abcd ou aucun champ -> Reservation Made!. Test RSVF-2406."
+[BUG-05] Cancel All échoue (database synchronization error),Bug,High,WEBTOURS RSVI FT,"removeAllFlights -> message d'erreur de synchronisation. Test RSVI-2403."
+[BUG-06] XSS réfléchi sur le champ depart,Bug,High,WEBTOURS RSVF SECURITY,"depart=<script>alert(1)</script> renvoyé non échappé."
+[BUG-07] admin.pl accessible sans authentification,Bug,High,WEBTOURS RSVA SECURITY PT,"GET /cgi-bin/admin.pl sans session -> page Administration."
+[BUG-08] Vols proposés avec départ = arrivée,Bug,Medium,WEBTOURS RSVF ET,"Paris -> Paris renvoie des vols. Test RSVF-2404."
+[BUG-09] Date de retour antérieure au départ acceptée,Bug,Medium,WEBTOURS RSVF ET,"12/20/2026 -> 12/10/2026 accepté. Test RSVF-2405."
+[BUG-10] Nombre de passagers hors bornes accepté (0, -1, 9999),Bug,Medium,WEBTOURS RSVF BT,"Tests RSVF-2407/2408/2409."
+[BUG-11] printenv.pl renvoie HTTP 500,Bug,Low,WEBTOURS RSVA,"error.log: couldn't spawn child process: printenv.pl."

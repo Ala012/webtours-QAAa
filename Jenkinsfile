@@ -1,10 +1,9 @@
 // Pipeline Jenkins : WebTours QA. Un seul test automatisé par défaut (test_ft_login_valide_http), modifiable par le paramètre TESTS
-// Dépôt : https://github.com/Ala012/webtours-QAAa.git (privé, branche main)
+// Dépôt : https://github.com/Ala012/webtours-QAAa.git (public, branche main : aucun identifiant nécessaire)
 //
 // Prérequis sur l'agent Jenkins (Windows) :
 //   - Python 3.12 installé (Google Chrome seulement pour les tests d'interface)
 //   - WebTours installé (dossier par défaut C:\WebTours, voir le paramètre WEBTOURS_HOME)
-//   - un identifiant Jenkins « github-webtours-qaaa » (utilisateur GitHub + jeton d'accès) pour lire le dépôt privé
 pipeline {
     agent any
 
@@ -40,7 +39,7 @@ pipeline {
                 checkout([
                     $class: 'GitSCM',
                     branches: [[name: '*/main']],
-                    userRemoteConfigs: [[url: env.REPO_URL, credentialsId: 'github-webtours-qaaa']]
+                    userRemoteConfigs: [[url: env.REPO_URL]]
                 ])
             }
         }

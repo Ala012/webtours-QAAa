@@ -67,6 +67,11 @@ def driver():
     opts = webdriver.ChromeOptions()
     if os.getenv("HEADLESS", "1") == "1":
         opts.add_argument("--headless=new")
+    if os.getenv("CHROME_BIN"):
+        opts.binary_location = os.environ["CHROME_BIN"]
+    if os.getenv("CHROME_NO_SANDBOX") == "1":  # nécessaire dans Docker
+        opts.add_argument("--no-sandbox")
+        opts.add_argument("--disable-dev-shm-usage")
     d = webdriver.Chrome(options=opts)  # Selenium Manager télécharge le driver
     d.implicitly_wait(5)
     yield d

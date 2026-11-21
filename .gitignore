@@ -4,3 +4,10 @@ __pycache__/
 results/report.xml
 results/report.html
 .env
+
+# livrables et captures locaux (non déposés)
+*.pdf
+*.docx
+*.pptx
+results/captures/
+results/anomalies/
